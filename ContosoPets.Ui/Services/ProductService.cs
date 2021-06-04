@@ -1,5 +1,4 @@
 ﻿using ContosoPets.Ui.Models;
-using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -11,12 +10,10 @@ namespace ContosoPets.Ui.Services
         private readonly string _route;
         private readonly HttpClient _httpClient;
 
-        public ProductService(
-            HttpClient httpClient,
-            IConfiguration configuration)
+        public ProductService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _route = configuration["ProductService:ControllerRoute"];
+            _route = httpClient.BaseAddress.AbsoluteUri;
         }
 
         public async Task<IEnumerable<Product>> GetProducts()
@@ -39,13 +36,13 @@ namespace ContosoPets.Ui.Services
             return product;
         }
 
-        public Task UpdateProduct(Product product) =>
-            _httpClient.PutAsJsonAsync($"{_route}/{product.Id}", product);
+        public async Task UpdateProduct(Product product) =>
+            await _httpClient.PutAsJsonAsync<Product>($"{_route}/{product.Id}", product);
 
-        public Task CreateProduct(Product product) =>
-            _httpClient.PostAsJsonAsync(_route, product);
+        public async Task CreateProduct(Product product) =>
+            await _httpClient.PostAsJsonAsync<Product>(_route, product);
 
-        public Task DeleteProduct(int productId) =>
-            _httpClient.DeleteAsync($"{_route}/{productId}");
+        public async Task DeleteProduct(int productId) =>
+            await _httpClient.DeleteAsync($"{_route}/{productId}");
     }
 }

@@ -1,14 +1,15 @@
-using ContosoPets.Api.Data;
-using ContosoPets.Api.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using ContosoPets.Api.Data;
+using ContosoPets.Api.Models;
 
 namespace ContosoPets.Api.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
+    [ApiController]
     public class ProductsController : ControllerBase
     {
         private readonly ContosoPetsContext _context;
@@ -19,11 +20,11 @@ namespace ContosoPets.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Product>> GetAll() =>
-            _context.Products;
+        public ActionResult<List<Product>> GetAll() =>
+            _context.Products.ToList();
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetById(int id)
+        public async Task<ActionResult<Product>> GetById(long id)
         {
             var product = await _context.Products.FindAsync(id);
 
@@ -36,7 +37,7 @@ namespace ContosoPets.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Product>> Create(Product product)
+        public async Task<IActionResult> Create(Product product)
         {
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
@@ -45,7 +46,7 @@ namespace ContosoPets.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Product product)
+        public async Task<IActionResult> Update(long id, Product product)
         {
             if (id != product.Id)
             {
@@ -59,7 +60,7 @@ namespace ContosoPets.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(long id)
         {
             var product = await _context.Products.FindAsync(id);
 

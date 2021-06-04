@@ -1,15 +1,22 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ContosoPets.Api.Models
 {
-    public class Product
+    public partial class Product
     {
-        public int Id { get; set; }
+        public Product()
+        {
+            ProductOrders = new HashSet<ProductOrder>();
+        }
 
+        public long Id { get; set; }
         [Required]
         public string Name { get; set; }
-
-        [Range(0.01, 9999.99)]
+        [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; }
+
+        public ICollection<ProductOrder> ProductOrders { get; set; }
     }
 }
