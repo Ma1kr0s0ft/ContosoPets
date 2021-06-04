@@ -1,0 +1,19 @@
+WARNING: Webapp 'apiapp569307981' already exists. The command will deploy contents to the existing app.
+WARNING: Creating AppServicePlan 'plan569307981' ...
+WARNING: Creating zip with contents of dir /home/azureuser/aspnet-learn/src/ContosoPets.Api ...
+WARNING: Getting scm site credentials for zip deployment
+WARNING: Starting zip deployment. This operation can take a while to complete ...
+WARNING: Deployment endpoint responded with status code 202
+WARNING: You can launch the app at http://apiapp569307981.azurewebsites.net
+{
+  "URL": "http://apiapp569307981.azurewebsites.net",
+  "appserviceplan": "plan569307981",
+  "location": "centralus",
+  "name": "apiapp569307981",
+  "os": "Windows",
+  "resourcegroup": "learn-d112fd65-a590-4b99-a3f1-74a1cb2f7cff",
+  "runtime_version": "dotnetcore|3.1",
+  "runtime_version_detected": "3.1",
+  "sku": "FREE",
+  "src_path": "//home//azureuser//aspnet-learn//src//ContosoPets.Api"
+}
